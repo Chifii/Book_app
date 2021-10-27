@@ -1,0 +1,102 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'io.gitlab.arturbosch.detekt'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.nt.KavakApp"
+        minSdkVersion 24
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+detekt {
+    toolVersion = "$detektVersion"
+    input = files("$projectDir")
+    // config = files("${rootProject.projectDir}/custom.detekt.yml")
+    buildUponDefaultConfig = true
+    autoCorrect = true
+    parallel = true
+    reports {
+        xml {
+            enabled = true
+        }
+        html {
+            enabled = true
+        }
+    }
+}
+
+dependencies {
+
+    // Core - Android
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "androidx.core:core-ktx:$ktxCore"
+    implementation "androidx.appcompat:appcompat:$appCompat"
+    implementation "com.google.android.material:material:$androidMaterial"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayout"
+
+    // Test
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    testImplementation "org.mockito:mockito-core:$mockitoCoreVersion"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+
+    // Rest client
+    implementation "com.squareup.okhttp3:okhttp:$okHttpversion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitversion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitversion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitversion"
+
+    // Rx Java
+    implementation "io.reactivex.rxjava2:rxjava:$rxJava2Version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid2Version"
+
+    // Workers
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+
+    // EventBus
+    implementation "de.greenrobot:eventbus:$eventBusVersion"
+
+    // Animations
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+
+    // Room
+    implementation "android.arch.persistence.room:runtime:1.1.1"
+    kapt "android.arch.persistence.room:compiler:1.1.1"
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+
+    // Navigation
+
+    // Others
+}
